@@ -24,17 +24,17 @@ class App extends Component {
   }
   getUser(id) {
     axios.get('http://localhost:3030/user/' + id)
-    .then(response => {
-      console.log(response.data)
-      this.setState({
-        user: response.data
+      .then(response => {
+        console.log(response.data)
+        this.setState({
+          user: response.data[0]
+        })
       })
-    })
   }
   render() {
     const user = this.state.users.map((person, i) => {
       return (
-        <div key={i} onClick={ () => { this.getUser(person.id) } }>
+        <div className='user-box' key={i} onClick={() => { this.getUser(person.id) }}>
           <p>{person.first_name}</p>
           <p>{person.last_name}</p>
           <p>{person.email}</p>
@@ -43,7 +43,11 @@ class App extends Component {
       )
     })
     return (
-      <div>{user}</div>
+      <div className='screen'>
+        <div>{user}</div>
+        <div>{this.state.user.first_name}</div>
+      </div>
+
     );
   }
 }
