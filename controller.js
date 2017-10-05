@@ -13,7 +13,6 @@ module.exports = {
                 console.log(response, 'create worked')
             })
     },
-    
     getAllUsers: (req, res) => {
         const db = req.app.get('db')
         db.get_all_users()
