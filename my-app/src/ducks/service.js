@@ -15,35 +15,25 @@ export const getUser = (id) => {
         })
 }
 
-export const create = () => {
-    // this.setState({
-    //     firstName: '',
-    //     lastName: '',
-    //     email: '',
-    //     birthYear: null
-    // })
-    // const data = {
-    //     first_name: state.firstName,
-    //     last_name: state.lastName,
-    //     email: state.email,
-    //     year_born: state.birthYear
-    // }
-    axios.post('http://localhost:3030/create')
+export const create = (firstName, lastName, email, birthYear) => {
+    const data = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        year_born: birthYear
+    }
+    axios.post('http://localhost:3030/create', data)
         .then(response => {
             axios.get('http://localhost:3030/users')
-                .then(responseFromCreate => {
-                    console.log(responseFromCreate)
-                    this.setState({
-                        users: responseFromCreate.data
-                    })
-                })
+                .then(getNewObject => getNewObject.data)
         }).catch(err => {
             console.log('create user err', err)
         })
 }
 
 export const murderUser = (id) => {
-    return axios.delete('http://localhost:3030/users/' + id).then(responseFromMurder => {
+    return axios.delete('http://localhost:3030/user/' + id).then(responseFromMurder => {
+        console.log(responseFromMurder)
         axios.get('http://localhost:3030/users')
             .then(getNewObject => getNewObject.data)
     })

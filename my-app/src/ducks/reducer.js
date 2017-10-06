@@ -6,7 +6,8 @@ const GET_USERS_FULFILLED = 'GET_USERS_FULFILLED';
 const GET_USER = 'GET_USER';
 const GET_USER_FULFILLED = 'GET_USER_FULFILLED';
 const INPUT = 'INPUT';
-const CREATE = 'CREATE'
+const CREATE = 'CREATE';
+const MURDER = 'MURDER'
 
 const initialState = {
     users: [],
@@ -18,6 +19,7 @@ const initialState = {
 }
 
 export default function reducer(state = initialState, action) {
+    console.log(action.payload)
     switch (action.type) {
         case GET_USERS_FULFILLED:
             return Object.assign({}, state, { users: action.payload });
@@ -26,14 +28,16 @@ export default function reducer(state = initialState, action) {
         case INPUT:
             return Object.assign({}, state, { [action.payload.formField]: action.payload.input });
         case CREATE:
-            return Object.assign({}, state, { users: action.payload, firstName: '', lastName: '', email: '', birthYear: null })
+            return Object.assign({}, state, { users: action.payload, firstName: '', lastName: '', email: '', birthYear: null });
+        case MURDER: 
+            return Object.assign({}, state, { users: action.payload })
+
         default:
             return state
     }
 }
 
 export function getUsers() {
-
     return {
         type: GET_USERS,
         payload: service.getUsers()
@@ -57,10 +61,17 @@ export function handleInput(input, formField) {
     } 
 }
 
-export function create() {
+export function create(firstName, lastName, email, birthYear) {
     
     return {
         type: CREATE,
-        payload: service.create()
+        payload: service.create(firstName, lastName, email, birthYear)
+    }
+}
+
+export function murderUser(id) {
+    return {
+        type: MURDER,
+        payload: service.murderUser(id)
     }
 }

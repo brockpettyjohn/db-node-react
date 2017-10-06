@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { getUsers, getUser, handleInput } from './ducks/reducer.js';
+import { getUsers, getUser, handleInput, create, murderUser } from './ducks/reducer.js';
 import { connect } from 'react-redux'
 import './App.css';
-import axios from 'axios'
+// import axios from 'axios'
 class App extends Component {
   constructor() {
     super();
@@ -93,6 +93,7 @@ class App extends Component {
   //     })
   // }
   render() {
+    console.log(this.props.users)
     const user = this.props.users.map((person, i) => {
       return (
         <div className='user-box' key={i} onClick={() => { this.props.getUser(person.id) }}>
@@ -100,7 +101,7 @@ class App extends Component {
           <p>{person.last_name}</p>
           <p>{person.email}</p>
           <p>{person.year_born}</p>
-          <button onClick={() => { this.murderUser(person.id) }}>Murder</button>
+          <button onClick={() => { this.props.murderUser(person.id) }}>Murder</button>
         </div>
       )
     })
@@ -115,7 +116,7 @@ class App extends Component {
           <input value={this.props.email} type='text' name='Email' onChange={(e) => { this.props.handleInput(e.target.value, 'email') }} />
           <span>Birth</span>
           <input value={this.props.birthYear} type='text' name='Birth' onChange={(e) => { this.props.handleInput(e.target.value, 'birthYear') }} />
-          <button onClick={this.create}>Create</button>
+          <button onClick={() => {this.props.create(this.props.firstName, this.props.lastName, this.props.email, this.props.birthYear)}}>Create</button>
         </div>
         <div className='user-boxes'>{user}</div>
         <div>{this.props.user.first_name}</div>
@@ -128,8 +129,12 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     users: state.users,
-    user: state.user
+    user: state.user,
+    firstName: state.firstName,
+    lastName: state.lastName,
+    email: state.email,
+    birthYear: state.birthYear
   }
 }
 
-export default connect(mapStateToProps, { getUsers, getUser, handleInput })(App);
+export default connect(mapStateToProps, { getUsers, getUser, handleInput, create, murderUser })(App);
