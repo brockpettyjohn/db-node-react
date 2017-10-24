@@ -22,7 +22,7 @@ export const create = (firstName, lastName, email, birthYear) => {
         email: email,
         year_born: birthYear
     }
-    axios.post('http://localhost:3030/create', data)
+    return axios.post('http://localhost:3030/create', data)
         .then(response => {
             axios.get('http://localhost:3030/users')
                 .then(getNewObject => getNewObject.data)

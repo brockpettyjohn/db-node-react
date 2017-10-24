@@ -13,11 +13,13 @@ class App extends Component {
       firstName: '',
       lastName: '',
       email: '',
-      birthYear: null
+      birthYear: null,
+      modal: false
     }
 
     // this.handleInput = this.handleInput.bind(this)
     // this.create = this.create.bind(this)
+    this.modalToggle = this.modalToggle.bind(this)
   }
 
   // componentDidMount() {
@@ -30,7 +32,7 @@ class App extends Component {
   //     })
   // }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getUsers()
   }
 
@@ -92,6 +94,12 @@ class App extends Component {
 
   //     })
   // }
+modalToggle(){
+  this.setState({
+modal: !this.state.modal
+  })
+}
+
   render() {
     console.log(this.props.users)
     const user = this.props.users.map((person, i) => {
@@ -116,10 +124,17 @@ class App extends Component {
           <input value={this.props.email} type='text' name='Email' onChange={(e) => { this.props.handleInput(e.target.value, 'email') }} />
           <span>Birth</span>
           <input value={this.props.birthYear} type='text' name='Birth' onChange={(e) => { this.props.handleInput(e.target.value, 'birthYear') }} />
-          <button onClick={() => {this.props.create(this.props.firstName, this.props.lastName, this.props.email, this.props.birthYear)}}>Create</button>
+          <button onClick={() => { this.props.create(this.props.firstName, this.props.lastName, this.props.email, this.props.birthYear); this.props.getUsers() }}>Create</button>
         </div>
         <div className='user-boxes'>{user}</div>
         <div>{this.props.user.first_name}</div>
+        <button onClick={this.modalToggle}>hola</button>
+        {
+          this.state.modal ?
+        "brock"
+        :
+        null
+        }
       </div>
 
     );

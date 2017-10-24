@@ -7,6 +7,8 @@ const GET_USER = 'GET_USER';
 const GET_USER_FULFILLED = 'GET_USER_FULFILLED';
 const INPUT = 'INPUT';
 const CREATE = 'CREATE';
+const CREATE_FULFILLED = 'CREATE_FULFILLED'
+const MURDER_FULFILLED = 'MURDER_FULFILLED'
 const MURDER = 'MURDER'
 
 const initialState = {
@@ -29,7 +31,7 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { [action.payload.formField]: action.payload.input });
         case CREATE:
             return Object.assign({}, state, { users: action.payload, firstName: '', lastName: '', email: '', birthYear: null });
-        case MURDER: 
+        case MURDER:
             return Object.assign({}, state, { users: action.payload })
 
         default:
@@ -58,11 +60,11 @@ export function handleInput(input, formField) {
             formField,
             input
         }
-    } 
+    }
 }
 
 export function create(firstName, lastName, email, birthYear) {
-    
+
     return {
         type: CREATE,
         payload: service.create(firstName, lastName, email, birthYear)
